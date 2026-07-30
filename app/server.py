@@ -6,7 +6,7 @@ from transformers import AutoTokenizer
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description="MLX Dynamic Model Server")
+    parser = argparse.ArgumentParser(description="MLX Dynamic Model Server", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "model", type=str, help="The name of the model to load from local cache."
     )
