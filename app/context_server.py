@@ -4,7 +4,7 @@ import sys
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Start Server with Specific Context Size Profiles")
+    parser = argparse.ArgumentParser(description="Start Server with Specific Context Size Profiles", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         "model",
         type=str,

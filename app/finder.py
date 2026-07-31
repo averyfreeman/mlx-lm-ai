@@ -1,19 +1,28 @@
 import os
 from pathlib import Path
 
+from .manage import load_config
+
 
 def find_model(model_name: str) -> Path | None:
     """
-    Search for a given model name in ~/.lmstudio/models and ~/.cache/huggingface/hub.
+    Search for a given model name in ~/.lmstudio/models, ~/.cache/huggingface/hub,
+    and any custom paths added via manage-model-sources.
     Returns the Path to the directory containing config.json if found.
     """
     home = Path.home()
 
-    # Places to search
+    # Default places to search
     search_paths = [
         home / ".lmstudio" / "models",
         home / ".cache" / "huggingface" / "hub",
     ]
+
+    # Add custom paths from config
+    config = load_config()
+    custom_paths = config.get("custom_paths", [])
+    for p in custom_paths:
+        search_paths.append(Path(p))
 
     # We are looking for directories that:
     # 1. contain the `model_name` string in their path
@@ -43,4 +52,4 @@ if __name__ == "__main__":
         else:
             print(f"Model {sys.argv[1]} not found.")
     else:
-        print("Usage: python finder.py <model_name>")
+        print("Usage: python -m app.finder <model_name>")
